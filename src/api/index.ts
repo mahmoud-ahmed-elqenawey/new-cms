@@ -1,7 +1,8 @@
+import { RawAxiosRequestConfig } from "axios";
 import axiosInstance from "./config";
 
-export const get = async (endpoint: string) => {
-  const res = await axiosInstance.get(endpoint);
+export const get = async (endpoint: string, config?: RawAxiosRequestConfig) => {
+  const res = await axiosInstance.get(endpoint, config);
   return res.data;
 };
 

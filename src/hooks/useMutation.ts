@@ -1,13 +1,13 @@
 import { remove, edit, patch, post } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useCustomAdd = (endpoint: string, queryKey: string[]) => {
+export const useCustomPost = (endpoint: string, queryKey?: string[]) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (body: any) => post(endpoint, body),
     onSuccess: () => {
-      queryClient.resetQueries({ queryKey });
+      queryKey && queryClient.resetQueries({ queryKey });
     },
   });
 };

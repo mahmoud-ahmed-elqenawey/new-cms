@@ -1,9 +1,16 @@
 import { get } from "@/api";
-import { useQuery } from "@tanstack/react-query";
+import { QueryKey, useQuery } from "@tanstack/react-query";
+import { AxiosRequestConfig } from "axios";
 
-export const useCustomQuery = (queryKey: string[], endpoint: string) => {
+export const useCustomQuery = (
+  queryKey: QueryKey,
+  endpoint: string,
+  config?: AxiosRequestConfig,
+  enabled?: boolean
+) => {
   return useQuery({
     queryKey,
-    queryFn: () => get(endpoint),
+    queryFn: () => get(endpoint, config),
+    enabled,
   });
 };
