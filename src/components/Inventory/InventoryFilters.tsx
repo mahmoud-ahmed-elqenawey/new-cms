@@ -1,10 +1,9 @@
 import { useCustomQuery } from "@/hooks/useQuery";
 import projectApiPathes from "@/utils/projectPathes";
-import { Search } from "lucide-react";
 import Loading from "../core/Loading";
 import { Box, Field, Input, SimpleGrid } from "@chakra-ui/react";
 import SelectInput from "../core/SelectInput";
-import DateFilter from "../core/DateFilter";
+// import DateFilter from "../core/DateFilter";
 
 interface InventoryFiltersProps {
   show: boolean;
@@ -38,26 +37,6 @@ export default function InventoryFilters({
     ["inventory_subcategories"],
     projectApiPathes.inventorySubcategories
   );
-  //   useEffect(() => {
-  //     async function fetchData() {
-  //       try {
-  //         setIsLoading(true);
-  //         const [categoriesResponse, subcategoriesResponse] = await Promise.all([
-  //           getCategories(),
-  //           getSubcategories(),
-  //         ]);
-
-  //         setCategories(categoriesResponse.data);
-  //         setSubcategories(subcategoriesResponse.data);
-  //       } catch (err) {
-  //         setError(err instanceof Error ? err.message : "Failed to fetch data");
-  //       } finally {
-  //         setIsLoading(false);
-  //       }
-  //     }
-
-  //     fetchData();
-  //   }, []);
 
   if (!show) return null;
 

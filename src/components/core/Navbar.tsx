@@ -1,14 +1,6 @@
 import { removeTokens } from "@/services/auth";
 import useAuth from "@/store/useAuth";
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  Button,
-  Circle,
-  Flex,
-  Float,
-} from "@chakra-ui/react";
+import { Avatar, Box, Button, Circle, Flex, Float } from "@chakra-ui/react";
 import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router";
 

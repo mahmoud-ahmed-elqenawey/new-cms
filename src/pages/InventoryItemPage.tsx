@@ -40,8 +40,6 @@ export default function InventoryItemPage() {
     `inventory/v2/item/${id}`
   );
 
-  console.log("item", item);
-
   const getHistoryTypeLabel = (type: string) => {
     switch (type) {
       case "ItemIn":
@@ -261,16 +259,17 @@ export default function InventoryItemPage() {
                     <VStack gap={2} align="start">
                       {record.documents.map((doc: any, idx: any) => (
                         <Button
+                          asChild
                           key={idx}
                           as="a"
-                          href={doc}
-                          target="_blank"
                           rel="noopener noreferrer"
                           variant="solid"
-                          leftIcon={<FileText />}
                           size="sm"
                         >
-                          مستند {idx + 1}
+                          <a href={doc} target="_blank">
+                            <FileText />
+                            مستند {idx + 1}
+                          </a>
                         </Button>
                       ))}
                     </VStack>

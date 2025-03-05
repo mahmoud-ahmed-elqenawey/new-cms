@@ -27,7 +27,7 @@ import useAuth from "@/store/useAuth";
 interface CourseDetailsProps {
   details: any;
   onBack: () => void;
-  onCourseFinished: () => void;
+  onCourseFinished: (data?: any) => void;
 }
 
 // Utility functions (assuming these were defined elsewhere)
@@ -58,7 +58,6 @@ export default function CourseDetails({
 }: CourseDetailsProps) {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const { user } = useAuth();
-  console.log("user", user);
   const permission: any = user;
 
   const students = useCustomQuery(

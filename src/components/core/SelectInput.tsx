@@ -1,6 +1,6 @@
 "use client";
 
-import { createListCollection, Select } from "@chakra-ui/react";
+import { createListCollection } from "@chakra-ui/react";
 import {
   SelectContent,
   SelectItem,
