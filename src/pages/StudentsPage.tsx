@@ -5,7 +5,7 @@ import Pagination from "@/components/core/Pagination";
 import StudentTableFilters from "@/components/Students/StudentTableFilters";
 import { useCustomQuery } from "@/hooks/useQuery";
 import projectApiPathes from "@/utils/projectPathes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 
 const StudentsPage = () => {
