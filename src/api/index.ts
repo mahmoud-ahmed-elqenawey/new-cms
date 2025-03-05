@@ -6,17 +6,17 @@ export const get = async (endpoint: string, config?: RawAxiosRequestConfig) => {
   return res.data;
 };
 
-export const post = async (endpoint: string, body: any) => {
+export const post = async (endpoint: string, body: unknown) => {
   const res = await axiosInstance.post(endpoint, body);
   return res.data;
 };
 
-export const edit = async (endpoint: string, body: any) => {
+export const edit = async (endpoint: string, body: unknown) => {
   const res = await axiosInstance.put(endpoint, body);
   return res.data;
 };
 
-export const patch = async (endpoint: string, body: any) => {
+export const patch = async (endpoint: string, body: unknown) => {
   const res = await axiosInstance.patch(endpoint, body);
   return res.data;
 };
