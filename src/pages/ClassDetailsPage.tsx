@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router";
+// import { useParams } from "react-router";
 import {
   Box,
   Heading,
@@ -82,7 +82,7 @@ interface SessionForm {
 }
 
 export default function ClassDetailsPage() {
-  const { classId } = useParams();
+  //   const { classId } = useParams();
   const navigate = useNavigate();
   const { open, onOpen, onClose } = useDisclosure();
   const [activeTab, setActiveTab] = useState<
