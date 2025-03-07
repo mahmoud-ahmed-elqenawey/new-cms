@@ -1,4 +1,6 @@
 import Layout from "@/layout/Layout";
+import CenterGroupsPage from "@/pages/CenterGroupsPage";
+import ClassDetailsPage from "@/pages/ClassDetailsPage";
 import CourseDetailsPage from "@/pages/CourseDetailsPage";
 import CoursesPage from "@/pages/CoursesPage";
 import Home from "@/pages/Home";
@@ -29,6 +31,12 @@ export default function AppRoutes() {
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="inventory" element={<InventoryPage />} />
             <Route path="inventory/:id" element={<InventoryItemPage />} />
+
+            <Route path="center-groups" element={<CenterGroupsPage />} />
+            <Route
+              path="center-groups/class/:classId"
+              element={<ClassDetailsPage />}
+            />
           </Route>
         )}
 

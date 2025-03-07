@@ -10,7 +10,7 @@ import {
   IconButton,
   FlexProps,
 } from "@chakra-ui/react";
-import { Book, Users, Package2, Home, Menu } from "lucide-react";
+import { Book, Users, Package2, Home, Menu, School } from "lucide-react";
 import { NavLink } from "react-router";
 import { IconType } from "react-icons";
 import { ReactNode } from "react";
@@ -32,7 +32,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "الطلاب", icon: Users, url: "students" },
   { name: "الاحصائيات", icon: Book, url: "statistics" },
   { name: "المخزون", icon: Package2, url: "inventory" },
-  // { name: "تسجيل الخروج", icon: <LogOut /> },
+  { name: "المجموعات والفصول", icon: School, url: "center-groups" },
 ];
 
 interface NavItemProps extends FlexProps {
