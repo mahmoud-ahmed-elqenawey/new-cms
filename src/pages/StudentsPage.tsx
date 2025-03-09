@@ -5,20 +5,25 @@ import Pagination from "@/components/core/Pagination";
 import StudentTableFilters from "@/components/Students/StudentTableFilters";
 import { useCustomQuery } from "@/hooks/useQuery";
 import projectApiPathes from "@/utils/projectPathes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 const StudentsPage = () => {
+  const filterDefaults = JSON.parse(
+    localStorage.getItem("filterDataStudents") || "{}"
+  );
   const [currentPage, setCurrentPage] = useState(1);
-  const [showFilters, setShowFilters] = useState(false);
-  const [search, setSearch] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [gender, setGender] = useState("");
-  const [centerId, setCenterId] = useState<any>("");
-  const [educationLevel, setEducationLevel] = useState<any>();
-  const [ageFrom, setAgeFrom] = useState<any>();
-  const [ageTo, setAgeTo] = useState<any>();
+  const [showFilters, setShowFilters] = useState(filterDefaults?.showFilters);
+  const [search, setSearch] = useState(filterDefaults.search || "");
+  const [startDate, setStartDate] = useState(filterDefaults.startDate || "");
+  const [endDate, setEndDate] = useState(filterDefaults.endDate || "");
+  const [gender, setGender] = useState(filterDefaults.gender || "");
+  const [centerId, setCenterId] = useState<any>(filterDefaults.centerId || "");
+  const [educationLevel, setEducationLevel] = useState<any>(
+    filterDefaults.educationLevel || ""
+  );
+  const [ageFrom, setAgeFrom] = useState<any>(filterDefaults?.ageFrom || "");
+  const [ageTo, setAgeTo] = useState<any>(filterDefaults?.ageTo || "");
   const [sort, setSort] = useState<{
     field: string;
     direction: "asc" | "desc" | null;
@@ -46,7 +51,6 @@ const StudentsPage = () => {
     `/${projectApiPathes.students}?${params.toString()}`
   );
 
-  console.log("data", data);
   const centers = useCustomQuery([`centers`], `/${projectApiPathes.centers}`);
 
   const { refetch: downloadExcel, isLoading } = useCustomQuery(
@@ -92,15 +96,37 @@ const StudentsPage = () => {
     });
   };
 
-  if (isPending || centers.isPending) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    localStorage.setItem(
+      "filterDataStudents",
+      JSON.stringify({
+        showFilters,
+        search,
+        gender,
+        centerId,
+        educationLevel,
+        ageFrom,
+        ageTo,
+      })
+    );
+  }, [showFilters, search, gender, centerId, educationLevel, ageFrom, ageTo]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, gender, centerId, educationLevel, ageFrom, ageTo]);
+
+  useEffect(() => {
+    localStorage.setItem("filterDataStudents", JSON.stringify({ save: false }));
+
+    if (!filterDefaults.save) localStorage.removeItem("filterDataStudents");
+  }, []);
 
   return (
     <div>
       <PageHeader
         title="صفحة الطلاب"
         count={`إجمالي عدد الطلاب: ${data?.count}`}
+        countLoading={isPending}
         showFilters={showFilters}
         setShowFilters={setShowFilters}
         buttonClick={downloadCoursesExcelFile}
@@ -128,15 +154,18 @@ const StudentsPage = () => {
         setAgeTo={setAgeTo}
       />
 
-      <DataTable
-        columns={columns}
-        data={data?.data ? data?.data : []}
-        sort={sort}
-        onSort={handleSort}
-        onRowClick={handleStudentClick}
-        storageKeyName="students-table-columns"
-      />
-
+      {isPending || centers.isPending ? (
+        <Loading type="skeleton" />
+      ) : (
+        <DataTable
+          columns={columns}
+          data={data?.data ? data?.data : []}
+          sort={sort}
+          onSort={handleSort}
+          onRowClick={handleStudentClick}
+          storageKeyName="students-table-columns"
+        />
+      )}
       <Pagination
         currentPage={currentPage}
         hasNext={data?.next}
