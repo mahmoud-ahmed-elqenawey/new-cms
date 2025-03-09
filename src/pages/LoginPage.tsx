@@ -1,7 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Field } from "@/components/ui/field";
 
 import { storeTokens } from "@/services/auth";
@@ -13,13 +12,13 @@ import {
   Flex,
   Heading,
   Input,
-  Link,
+  Link as ChakraLink,
   Text,
   // VStack,
 } from "@chakra-ui/react";
 import { useCustomPost } from "@/hooks/useMutation";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 type Inputs = {
   number: string;
   password: string;
@@ -53,7 +52,7 @@ const LoginPage = () => {
         }
       }
     );
-    console.log(data);
+    // console.log(data);
   };
 
   return (
@@ -139,11 +138,11 @@ const LoginPage = () => {
             />
           </Field>
 
-          <Flex justifyContent="space-between" alignItems="center" mb={6}>
-            <Checkbox>تذكرني</Checkbox>
-            <Link color="blue.500" href="#">
-              هل نسيت كلة المرور؟
-            </Link>
+          <Flex justifyContent="flex-end" alignItems="center" mb={6}>
+            {/* <Checkbox>تذكرني</Checkbox> */}
+            <ChakraLink asChild color="blue.500">
+              <Link to="/forgot-password">هل نسيت كلة المرور؟</Link>
+            </ChakraLink>
           </Flex>
 
           <Button type="submit" colorScheme="blue" width="full" mb={4}>
@@ -151,21 +150,21 @@ const LoginPage = () => {
           </Button>
         </form>
 
-        <Button variant="outline" colorScheme="blue" width="full" mb={4}>
+        {/* <Button variant="outline" colorScheme="blue" width="full" mb={4}>
           <img
             src="https://www.google.com/favicon.ico"
             alt="Google"
             width="16"
           />
           تسجيل الدخول باستخدام جوجل
-        </Button>
+        </Button> */}
 
-        <Text textAlign="center" mt={4}>
+        {/* <Text textAlign="center" mt={4}>
           ليس لديك حساب؟{" "}
-          <Link color="blue.500" href="#">
-            انشاء حساب
-          </Link>
-        </Text>
+          <ChakraLink asChild color="blue.500">
+            <Link to="/register">انشاء حساب</Link>
+          </ChakraLink>
+        </Text> */}
       </Box>
     </Flex>
   );

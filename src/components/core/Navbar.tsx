@@ -6,8 +6,9 @@ import { useNavigate } from "react-router";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated, user } = useAuth();
 
+  const userName = user?.first_name + " " + user?.last_name;
   return (
     <Box
       bg="white"
@@ -20,7 +21,7 @@ const Navbar = () => {
     >
       <Flex align="center" gap="2">
         <Avatar.Root size="lg" variant="outline">
-          <Avatar.Fallback name="محمود القناوي" />
+          <Avatar.Fallback name={userName} />
           <Avatar.Image src="https://scontent.fcai19-12.fna.fbcdn.net/v/t39.30808-6/477337398_3947321918918937_8815390351782790006_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=KJbjaSS51AUQ7kNvgGlYEYk&_nc_oc=AdhH0ZkSY8kEEI2I3mcixmPV2XryaDcHir6WA6M1ZCippXWY6W7GFxK7eM0Df65ih2s&_nc_zt=23&_nc_ht=scontent.fcai19-12.fna&_nc_gid=ARU7k3Ptzhth3pkEOxU6vr4&oh=00_AYCPEoNYBzCbFOh9J-gIYEDvrCkmA1tXDdwNzKCVfwS1DQ&oe=67CA08C7" />
           <Float placement="bottom-end" offsetX="1" offsetY="1">
             <Circle
@@ -31,7 +32,7 @@ const Navbar = () => {
             />
           </Float>
         </Avatar.Root>
-        محمود القناوي - مدير تقني
+        {userName}
       </Flex>
       <Button
         onClick={() => removeTokens(navigate, setIsAuthenticated)}

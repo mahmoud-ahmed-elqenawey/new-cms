@@ -1,9 +1,7 @@
 import { useCustomQuery } from "@/hooks/useQuery";
 import projectApiPathes from "@/utils/projectPathes";
-import Loading from "../core/Loading";
 import { Box, Field, Input, SimpleGrid } from "@chakra-ui/react";
 import SelectInput from "../core/SelectInput";
-// import DateFilter from "../core/DateFilter";
 
 interface InventoryFiltersProps {
   show: boolean;
@@ -50,9 +48,9 @@ export default function InventoryFilters({
   // Temporary mock data for centers
   const centers = ["المركز الرئيسي", "مركز التحفيظ", "المركز النسائي"];
 
-  if (categories.isPending || subcategories.isPending) {
-    return <Loading />;
-  }
+  // if (categories.isPending || subcategories.isPending) {
+  //   return <Loading />;
+  // }
 
   return (
     <Box bg="gray.50" p={4} borderRadius="lg" mb={6}>
@@ -94,7 +92,7 @@ export default function InventoryFilters({
         />
 
         <SelectInput
-          label="التصنيف"
+          label="المراكز"
           data={centers.map((el: any) => ({
             label: el,
             value: el,

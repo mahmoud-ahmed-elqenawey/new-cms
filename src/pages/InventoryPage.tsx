@@ -78,15 +78,12 @@ const InventoryPage = () => {
     },
   ];
 
-  if (isPending) {
-    return <Loading />;
-  }
-
   return (
     <div>
       <PageHeader
         title=" صفحة المخزن"
         count={`إجمالي عدد الدورات: ${data?.count}`}
+        countLoading={isPending}
         showFilters={showFilters}
         setShowFilters={setShowFilters}
       />
@@ -103,21 +100,24 @@ const InventoryPage = () => {
         onCenterChange={setSelectedCenter}
       />
 
-      <DataTable
-        columns={columns}
-        data={data?.data}
-        sort={sort}
-        onSort={handleSort}
-        storageKeyName="inventoryTableColumns"
-        onRowClick={(id) => navigate(`/inventory/${id}`)}
-      />
-
+      {isPending ? (
+        <Loading type="skeleton" />
+      ) : (
+        <DataTable
+          columns={columns}
+          data={data?.data}
+          sort={sort}
+          onSort={handleSort}
+          storageKeyName="inventoryTableColumns"
+          onRowClick={(id) => navigate(`/inventory/${id}`)}
+        />
+      )}
       <Pagination
         currentPage={currentPage}
-        hasNext={data.next}
-        hasPrevious={data.previous}
+        hasNext={data?.next}
+        hasPrevious={data?.previous}
         onPageChange={setCurrentPage}
-        count={data.count}
+        count={data?.count}
       />
     </div>
   );

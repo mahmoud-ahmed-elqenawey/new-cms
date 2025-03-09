@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValueText,
 } from "@/components/ui/select";
+import { useMemo } from "react";
 
 type DataItem = { label: string; value: string }[];
 
@@ -27,9 +28,11 @@ const SelectInput = ({
   multiple?: boolean;
   disabled?: boolean;
 }) => {
-  const frameworks = createListCollection({
-    items: data,
-  });
+  const frameworks = useMemo(() => {
+    return createListCollection({
+      items: data || [],
+    });
+  }, [data]);
 
   return (
     <SelectRoot
@@ -45,7 +48,8 @@ const SelectInput = ({
         <SelectValueText placeholder={`اختر ${label}`} />
       </SelectTrigger>
       <SelectContent>
-        {frameworks.items.map((item) => (
+        <SelectItem item="">الكل</SelectItem>
+        {frameworks?.items.map((item) => (
           <SelectItem item={item} key={item.value}>
             {item.label}
           </SelectItem>

@@ -119,7 +119,7 @@ export default function StudentTableFilters({
           onValueChange={setAgeTo}
         />
 
-        {permission?.permission.__04__all_tajweed_data_access && (
+        {permission?.permission?.__04__all_tajweed_data_access && (
           <SelectInput
             label="المراكز"
             data={centers.map((el: any) => ({ label: el.name, value: el.id }))}

@@ -169,20 +169,29 @@ const CoursesPage = () => {
   ]);
 
   useEffect(() => {
+    setCurrentPage(1);
+  }, [
+    search,
+    courseTypeId,
+    centerId,
+    startDate,
+    endDate,
+    modeOfInstructionId,
+    isFinished,
+  ]);
+
+  useEffect(() => {
     localStorage.setItem("filterData", JSON.stringify({ save: false }));
 
     if (!filterDefaults.save) localStorage.removeItem("filterData");
   }, []);
-
-  if (isPending || centers.isPending || coursesType.isPending) {
-    return <Loading />;
-  }
 
   return (
     <div>
       <PageHeader
         title="صفحة الدورات"
         count={`إجمالي عدد الدورات: ${data?.count}`}
+        countLoading={isPending}
         showFilters={showFilters}
         setShowFilters={setShowFilters}
         buttonClick={downloadCoursesExcelFile}
@@ -197,10 +206,10 @@ const CoursesPage = () => {
         endDate={endDate}
         onStartDateChange={setStartDate}
         onEndDateChange={setEndDate}
-        courseType={coursesType.data.data}
+        courseType={coursesType?.data?.data}
         courseTypeId={courseTypeId}
         setCourseTypeId={setCourseTypeId}
-        centers={centers.data.data}
+        centers={centers?.data?.data}
         centerId={centerId}
         setCenterId={setCenterId}
         modeOfInstructionId={modeOfInstructionId}
@@ -209,21 +218,25 @@ const CoursesPage = () => {
         setIsFinished={setIsFinished}
       />
 
-      <DataTable
-        columns={columns}
-        data={data.data}
-        onRowClick={(id) => navigate(`/courses/${id}`)}
-        sort={sort}
-        onSort={handleSort}
-        storageKeyName="course-table-columns"
-      />
+      {isPending || centers.isPending || coursesType.isPending ? (
+        <Loading type="skeleton" />
+      ) : (
+        <DataTable
+          columns={columns}
+          data={data.data}
+          onRowClick={(id) => navigate(`/courses/${id}`)}
+          sort={sort}
+          onSort={handleSort}
+          storageKeyName="course-table-columns"
+        />
+      )}
 
       <Pagination
         currentPage={currentPage}
-        hasNext={data.next}
-        hasPrevious={data.previous}
+        hasNext={data?.next}
+        hasPrevious={data?.previous}
         onPageChange={setCurrentPage}
-        count={data.count}
+        count={data?.count}
       />
     </div>
   );

@@ -69,18 +69,20 @@ export default function InventoryItemPage() {
 
   if (!item) return null;
 
-  if (item.isPending) return <Loading />;
+  if (item.isPending) return <Loading type="spinner" />;
 
   return (
     <VStack gap={6} align="stretch" p={4}>
-      <Button
-        onClick={() => navigate("/inventory")}
-        variant="ghost"
-        colorScheme="green"
-      >
-        <ArrowRight />
-        العودة إلى المخزون
-      </Button>
+      <Flex justify="space-between">
+        <Button
+          onClick={() => navigate("/inventory")}
+          variant="ghost"
+          colorScheme="green"
+        >
+          <ArrowRight />
+          العودة إلى المخزون
+        </Button>
+      </Flex>
 
       <Box borderWidth={1} borderRadius="lg" p={6} bg="white">
         <Flex direction={{ base: "column", md: "row" }} gap={6}>
@@ -217,16 +219,17 @@ export default function InventoryItemPage() {
                     <Text fontSize="sm" fontWeight="medium" mb={2}>
                       الصور:
                     </Text>
-                    <Grid templateColumns="repeat(3, 1fr)" gap={2}>
+                    <Flex alignItems="center" wrap="wrap" gap={2}>
                       {record.images.map((image: any, idx: any) => (
                         <Box
                           key={idx}
                           position="relative"
-                          // height="20"
                           borderRadius="lg"
                           overflow="hidden"
                           bg="gray.100"
                           cursor="pointer"
+                          w="80px"
+                          h="80px"
                           onClick={() =>
                             handleImageClick(
                               image,
@@ -239,15 +242,12 @@ export default function InventoryItemPage() {
                           <Image
                             src={image}
                             alt={`صورة ${idx + 1}`}
-                            // objectFit="cover"
-                            // width="full"
-                            // height="full"
-                            minW="300px"
-                            minH="300px"
+                            w="80px"
+                            h="80px"
                           />
                         </Box>
                       ))}
-                    </Grid>
+                    </Flex>
                   </Box>
                 )}
 

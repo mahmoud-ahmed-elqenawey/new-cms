@@ -65,7 +65,7 @@ export default function TableFilters({
 
         <SelectInput
           label="الدورات"
-          data={courseType.map((el) => ({ label: el.name, value: el.id }))}
+          data={courseType?.map((el) => ({ label: el.name, value: el.id }))}
           defaultValue={[courseTypeId]}
           onValueChange={setCourseTypeId}
         />
@@ -80,10 +80,10 @@ export default function TableFilters({
           onValueChange={setModeOfInstructionId}
         />
 
-        {permission?.permission.__04__all_tajweed_data_access && (
+        {permission?.permission?.__04__all_tajweed_data_access && (
           <SelectInput
             label="المراكز"
-            data={centers.map((el) => ({ label: el.name, value: el.id }))}
+            data={centers?.map((el) => ({ label: el.name, value: el.id }))}
             defaultValue={[centerId]}
             onValueChange={setCenterId}
           />

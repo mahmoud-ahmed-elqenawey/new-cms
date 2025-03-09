@@ -6,6 +6,7 @@ import { useCustomQuery } from "@/hooks/useQuery";
 import projectApiPathes from "@/utils/projectPathes";
 import { useLayoutEffect } from "react";
 import useAuth from "@/store/useAuth";
+import Loading from "@/components/core/Loading";
 
 const Layout = () => {
   const { setUser } = useAuth();
@@ -13,7 +14,9 @@ const Layout = () => {
 
   useLayoutEffect(() => {
     setUser(userData?.data?.data);
-  }, [userData.isPending]);
+  }, [userData?.data?.data]);
+
+  if (userData?.isPending) return <Loading type="spinner" />;
 
   return (
     <Box minH="100vh" bg="gray.100">

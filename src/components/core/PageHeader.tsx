@@ -3,7 +3,8 @@ import { Download, Filter, NotepadText } from "lucide-react";
 
 type PageHeader = {
   title: string;
-  count: string;
+  count?: string;
+  countLoading?: boolean;
   showFilters?: boolean;
   setShowFilters?: (state: boolean) => void;
   buttonLoading?: boolean;
@@ -13,6 +14,7 @@ type PageHeader = {
 const PageHeader = ({
   title,
   count,
+  countLoading,
   showFilters,
   setShowFilters,
   buttonLoading,
@@ -27,7 +29,7 @@ const PageHeader = ({
           {title}
         </Heading>
         <Text fontSize="sm" color="gray">
-          {count}
+          {!countLoading ? count : "تحميل"}
         </Text>
       </Box>
       {setShowFilters && (
