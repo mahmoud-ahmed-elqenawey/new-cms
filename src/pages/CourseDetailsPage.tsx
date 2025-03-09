@@ -18,7 +18,7 @@ export default function CourseDetailsPage() {
   );
 
   if (courseDetails.isPending) {
-    return <Loading />;
+    return <Loading type="spinner" />;
   }
 
   if (!courseDetails) {
