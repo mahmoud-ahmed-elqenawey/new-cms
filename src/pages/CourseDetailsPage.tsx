@@ -13,9 +13,9 @@ export default function CourseDetailsPage() {
     `tajweed/dashboard/course/${id}`
   );
 
-  const fetchCourseDetails = useCustomPost(
-    `tajweed/dashboard/finish_course/${id}/`
-  );
+  const finishCourse = useCustomPost(`tajweed/dashboard/finish_course/${id}/`, [
+    "tajweed/dashboard/course/",
+  ]);
 
   if (courseDetails.isPending) {
     return <Loading type="spinner" />;
@@ -29,7 +29,7 @@ export default function CourseDetailsPage() {
     <CourseDetails
       details={courseDetails.data.data}
       onBack={() => navigate("/courses")}
-      onCourseFinished={fetchCourseDetails.mutate}
+      onCourseFinished={finishCourse.mutate}
     />
   );
 }
