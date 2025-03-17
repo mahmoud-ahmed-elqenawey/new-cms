@@ -39,6 +39,8 @@ const InventoryPage = () => {
     `/${projectApiPathes.inventory}?${params.toString()}`
   );
 
+  const centers = useCustomQuery([`centers`], `/${projectApiPathes.centers}`);
+
   const handleSort = (field: string) => {
     setSort((prev) => ({
       field,
@@ -98,9 +100,10 @@ const InventoryPage = () => {
         onSubcategoryChange={setSelectedSubcategory}
         selectedCenter={selectedCenter}
         onCenterChange={setSelectedCenter}
+        centers={centers?.data?.data}
       />
 
-      {isPending ? (
+      {isPending || centers.isPending ? (
         <Loading type="skeleton" />
       ) : (
         <DataTable

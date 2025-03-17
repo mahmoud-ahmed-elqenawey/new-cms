@@ -27,6 +27,7 @@ export default function CourseDetailsPage() {
 
   return (
     <CourseDetails
+      id={id}
       details={courseDetails.data.data}
       onBack={() => navigate("/courses")}
       onCourseFinished={finishCourse.mutate}

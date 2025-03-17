@@ -13,6 +13,7 @@ interface InventoryFiltersProps {
   onSubcategoryChange: (value: string) => void;
   selectedCenter: string;
   onCenterChange: (value: string) => void;
+  centers: [];
 }
 
 export default function InventoryFilters({
@@ -25,6 +26,7 @@ export default function InventoryFilters({
   onSubcategoryChange,
   selectedCenter,
   onCenterChange,
+  centers,
 }: InventoryFiltersProps) {
   const categories = useCustomQuery(
     ["inventory_category"],
@@ -46,7 +48,7 @@ export default function InventoryFilters({
   console.log("filteredSubcategories", filteredSubcategories);
 
   // Temporary mock data for centers
-  const centers = ["المركز الرئيسي", "مركز التحفيظ", "المركز النسائي"];
+  // const centers = ["المركز الرئيسي", "مركز التحفيظ", "المركز النسائي"];
 
   // if (categories.isPending || subcategories.isPending) {
   //   return <Loading />;
@@ -94,8 +96,8 @@ export default function InventoryFilters({
         <SelectInput
           label="المراكز"
           data={centers.map((el: any) => ({
-            label: el,
-            value: el,
+            label: el.name,
+            value: el.id,
           }))}
           defaultValue={[selectedCenter]}
           onValueChange={onCenterChange}

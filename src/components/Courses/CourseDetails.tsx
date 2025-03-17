@@ -30,8 +30,10 @@ import {
 import useAuth from "@/store/useAuth";
 import { Field } from "../ui/field";
 import { formatDate } from "@/services/date";
+import { useCustomPost, useCustomUpdate } from "@/hooks/useMutation";
 
 interface CourseDetailsProps {
+  id: string | undefined;
   details: any;
   onBack: () => void;
   onCourseFinished: (data?: any) => void;
@@ -53,12 +55,15 @@ const getAttendanceStatusColor = (status: string) => {
       return "green";
     case "لم يحضر مطلقا":
       return "red";
+    case "حضور ضعيف":
+      return "orange";
     default:
       return "gray";
   }
 };
 
 export default function CourseDetails({
+  id,
   details,
   onBack,
   onCourseFinished,
@@ -66,7 +71,7 @@ export default function CourseDetails({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [closureNotes, setClosureNotes] = useState(details.closure_notes || "");
   const [startDate, setStartDate] = useState(formatDate(details.date));
-  const [notes, setNotes] = useState(details.notes || "");
+  const [notes, setNotes] = useState(details.end_notes || "");
   const [selectedStudent, setSelectedStudent] = useState<any>(null);
   const [withdrawalReason, setWithdrawalReason] = useState("");
   const [cancelReason, setCancelReason] = useState("");
@@ -104,6 +109,14 @@ export default function CourseDetails({
     `tajweed/dashboard/course/${details.id}/students`
   );
 
+  const updateNotes = useCustomUpdate(`tajweed/dashboard/course/${id}/`, [
+    "tajweed/dashboard/course/",
+  ]);
+
+  const setWithdrawalStudent = useCustomPost(`tdashboard/withdrawal_student/`, [
+    "tajweed/dashboard/course/",
+  ]);
+
   const handleFinishCourse = async () => {
     if (!closureNotes.trim()) {
       return;
@@ -115,13 +128,16 @@ export default function CourseDetails({
 
   const handleDateSave = () => {
     // Here you would typically make an API call to update the date
-    console.log("Saving new start date:", startDate);
+    // console.log("Saving new start date:", startDate);
+    updateNotes.mutate({ date: startDate });
+
     onDateEditClose();
   };
 
   const handleNotesSave = () => {
     // Here you would typically make an API call to update the notes
-    console.log("Saving new notes:", notes);
+    // console.log("Saving new notes:", notes);
+    updateNotes.mutate({ end_notes: notes });
     onNotesEditClose();
   };
 
@@ -138,12 +154,18 @@ export default function CourseDetails({
     // Here you would typically make an API call to process the withdrawal
     console.log("Processing withdrawal for student:", selectedStudent?.name);
     console.log("Withdrawal reason:", withdrawalReason);
+    setWithdrawalStudent.mutate({
+      course_id: details.id,
+      student_id: selectedStudent.id,
+      withdrawal_reason: withdrawalReason,
+    });
     onWithdrawalClose();
     setWithdrawalReason("");
     setSelectedStudent(null);
   };
 
   const openWithdrawalDialog = (student: any) => {
+    console.log("student", student);
     setSelectedStudent(student);
     onWithdrawalOpen();
   };
@@ -272,7 +294,7 @@ export default function CourseDetails({
             <Box borderWidth={1} borderRadius="md" p={4}>
               <HStack justify="space-between" align="start" mb={2}>
                 <Text fontSize="sm" color="gray.500">
-                  ملاحظات
+                  ملاحظات انهاء الدورة
                 </Text>
                 <IconButton
                   size="sm"
