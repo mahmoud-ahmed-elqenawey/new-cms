@@ -127,8 +127,6 @@ export default function CourseDetails({
   };
 
   const handleDateSave = () => {
-    // Here you would typically make an API call to update the date
-    // console.log("Saving new start date:", startDate);
     updateNotes.mutate({ date: startDate });
 
     onDateEditClose();
